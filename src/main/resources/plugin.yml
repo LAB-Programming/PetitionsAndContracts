@@ -4,3 +4,8 @@ description: This plugin allows players to petition admins and form contracs amo
 author: 1000000000
 website: https://github.com/LAB-Programming/PetitionsAndContracts
 main: net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts
+commands:
+  petition:
+    description: All commands related to petitions
+    usage: "Usage: /<command> create"
+    aliases: petitions
