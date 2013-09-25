@@ -1,0 +1,6 @@
+name: PetitionsAndContracts
+version: ${pom.version}
+description: This plugin allows players to petition admins and form contracs among themselves. The content of petitions and contracts is stored in books.
+author: 1000000000
+website: https://github.com/LAB-Programming/PetitionsAndContracts
+main: net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts
