@@ -1,5 +1,8 @@
 package net.clonecomputer.lab.petitionscontracts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class PetitionStorage {
@@ -14,4 +17,9 @@ public class PetitionStorage {
 		petitions.add(petition);
 	}
 	
+	public List<PetitionData> toSortedList() {
+		ArrayList<PetitionData> list = new ArrayList<PetitionData>(petitions);
+		Collections.sort(list);
+		return list;
+	}
 }

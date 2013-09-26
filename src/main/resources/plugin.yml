@@ -7,5 +7,5 @@ main: net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts
 commands:
   petition:
     description: All commands related to petitions
-    usage: "Usage: /<command> create"
+    usage: "Usage: /<command> [create|list]"
     aliases: petitions

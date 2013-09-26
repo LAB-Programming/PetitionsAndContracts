@@ -1,5 +1,7 @@
 package net.clonecomputer.lab.petitionscontracts;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,6 +19,10 @@ public class PetitionCommandExecutor implements CommandExecutor {
 		}
 		if(args[0].equalsIgnoreCase("create")) {
 			doCreateCommand(sender, cmd, label, args);
+		} else if(args[0].equalsIgnoreCase("list")) {
+			doListCommand(sender, cmd, label, args);
+		} else {
+			return false;
 		}
 		return true;
 	}
@@ -33,6 +39,15 @@ public class PetitionCommandExecutor implements CommandExecutor {
 		} else {
 			sender.sendMessage("§4Sorry, you must be a player to create a petition!");
 		}
+	}
+
+	private void doListCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		List<PetitionData> petitionsList = PetitionsAndContracts.plugin.getPetitionStorage().toSortedList();
+		sender.sendMessage("§e--------- §rList of Outstanding Petitions §e---------");
+		for(PetitionData p : petitionsList) {
+			sender.sendMessage(p.toColorizedString());
+		}
+		sender.sendMessage("§e--------- §r" + petitionsList.size() + " outstanding permissions §e-----------");
 	}
 
 }
