@@ -20,5 +20,6 @@ This is a bukkit plugin that allows players to petition server admins and create
 * Permissions
 
 ####Long Term:
+* Have the /petitions list command print use multiple pages if necessary
 * All the contract stuff
 * Configuration file that gives plugin greater flexibility
