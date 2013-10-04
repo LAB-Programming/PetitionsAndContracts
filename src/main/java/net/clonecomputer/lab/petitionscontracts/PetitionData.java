@@ -42,9 +42,8 @@ public class PetitionData implements Comparable<PetitionData> {
 			(int) (this.timeIssued.getTime() - o.timeIssued.getTime());
 	}
 	
-	public String toColorizedString() {
-		//Might want to tweak the colors a bit still
-		return String.format("§9%1$s§r, sub. by §3%2$s§r, §a%3$tD§r. %4$d signature(s)", bookData.getTitle(), bookData.getAuthor(), timeIssued, signers.size());
+	public String toChatString() {
+		return String.format("§r§6%1$s§r\n§r - §b%2$d§r signatures, submitted §a%3$tD§r by §3%4$s§r", bookData.getTitle(), signers.size(), timeIssued, bookData.getAuthor());
 	}
 	
 }

@@ -45,7 +45,7 @@ public class PetitionCommandExecutor implements CommandExecutor {
 		List<PetitionData> petitionsList = PetitionsAndContracts.plugin.getPetitionStorage().toSortedList();
 		sender.sendMessage("§e--------- §rList of Outstanding Petitions §e---------");
 		for(PetitionData p : petitionsList) {
-			sender.sendMessage(p.toColorizedString());
+			sender.sendMessage(p.toChatString());
 		}
 		sender.sendMessage("§e--------- §r" + petitionsList.size() + " outstanding permissions §e-----------");
 	}
