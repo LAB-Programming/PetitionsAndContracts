@@ -54,13 +54,9 @@
             			</goals>
             			<configuration>
               				<artifactSet>
-                				<excludes>
-                 					<exclude>junit:junit</exclude>
-                 					<exclude>org.bukkit:bukkit</exclude>
-               					</excludes>
-               					<includes>
-               						<include>commons-collections:commons-collections</include>
-               					</includes>
+                				<includes>
+                					<include>commons-collections:commons-collections</include>
+                				</includes>
               				</artifactSet>
             			</configuration>
           			</execution>
