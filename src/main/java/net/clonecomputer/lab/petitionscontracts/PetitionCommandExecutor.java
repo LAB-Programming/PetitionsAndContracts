@@ -1,5 +1,6 @@
 package net.clonecomputer.lab.petitionscontracts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.*;
@@ -40,7 +42,9 @@ public class PetitionCommandExecutor implements CommandExecutor {
 				ItemStack item = ((Player) sender).getItemInHand();
 				if(item.getType() == Material.WRITTEN_BOOK) {
 					String title = implode(" ", args, 1);
-					if(plugin.getPetitionStorage().addPetition(title, (BookMeta) item.getItemMeta(), (Player) sender)) {
+					PetitionData petition = plugin.getPetitionStorage().addPetition(title, (BookMeta) item.getItemMeta(), (Player) sender);
+					if(petition != null) {
+						plugin.setBookItemMeta(item, petition);
 						sender.sendMessage("§aSuccessfully submitted petition!");
 					} else {
 						sender.sendMessage("§4A petition by that name already exists!");
@@ -72,7 +76,7 @@ public class PetitionCommandExecutor implements CommandExecutor {
 				if(bookData != null) {
 					PlayerInventory inv = ((Player) sender).getInventory();
 					ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-					book.setItemMeta(bookData.getBookMeta());
+					plugin.setBookItemMeta(book, bookData);
 					inv.addItem(book);
 					sender.sendMessage("§aYou have received petition " + bookData.getTitle());
 				} else {

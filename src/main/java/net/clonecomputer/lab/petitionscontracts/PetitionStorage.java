@@ -16,10 +16,11 @@ public class PetitionStorage {
 		petitions = data;
 	}
 	
-	public boolean addPetition(String title, BookMeta petition, Player creator) {
-		if(petitions.containsKey(title)) return false;
-		petitions.put(title, new PetitionData(title, petition, creator));
-		return true;
+	public PetitionData addPetition(String title, BookMeta petition, Player creator) {
+		if(petitions.containsKey(title)) return null;
+		PetitionData newPetition = new PetitionData(title, petition, creator);
+		petitions.put(title, newPetition);
+		return newPetition;
 	}
 	
 	public List<PetitionData> toSortedList() {
