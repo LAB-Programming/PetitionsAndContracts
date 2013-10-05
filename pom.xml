@@ -33,9 +33,40 @@
 			<artifactId>bukkit</artifactId>
 			<version>1.6.2-R1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.0</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
+		<plugins>
+     		 <plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+       			<artifactId>maven-shade-plugin</artifactId>
+        		<version>2.1</version>
+        		<executions>
+          			<execution>
+            			<phase>package</phase>
+            			<goals>
+             				<goal>shade</goal>
+            			</goals>
+            			<configuration>
+              				<artifactSet>
+                				<excludes>
+                 					<exclude>junit:junit</exclude>
+                 					<exclude>org.bukkit:bukkit</exclude>
+               					</excludes>
+               					<includes>
+               						<include>commons-collections:commons-collections</include>
+               					</includes>
+              				</artifactSet>
+            			</configuration>
+          			</execution>
+        		</executions>
+      		</plugin>
+    	</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
