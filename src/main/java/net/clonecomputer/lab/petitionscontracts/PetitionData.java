@@ -12,18 +12,18 @@ public class PetitionData implements Comparable<PetitionData> {
 	private String title;
 	private BookMeta bookData;
 	private Player submitter;
-	private Set<Player> signers;
+	private Set<String> signers;
 	private Date timeIssued;
-	private Set<Player> closers;
+	private Set<String> closers;
 	
 	/**
 	 * Used when loading PetitionData from a file
 	 */
-	public static PetitionData load(String title, BookMeta bookData, Player submitter, Set<Player> signers, Date timeIssued, Set<Player> closers) {
+	public static PetitionData load(String title, BookMeta bookData, Player submitter, Set<String> signers, Date timeIssued, Set<String> closers) {
 		return new PetitionData(title, bookData, submitter, signers, timeIssued, closers);
 	}
 	
-	private PetitionData(String name, BookMeta data, Player creator, Set<Player> signersSet, Date issued, Set<Player> closersSet) {
+	private PetitionData(String name, BookMeta data, Player creator, Set<String> signersSet, Date issued, Set<String> closersSet) {
 		title = name;
 		bookData = data;
 		submitter = creator;
@@ -36,8 +36,8 @@ public class PetitionData implements Comparable<PetitionData> {
 		title = name;
 		bookData = petition;
 		submitter = creator;
-		signers = new HashSet<Player>();
-		signers.add(creator);
+		signers = new HashSet<String>();
+		signers.add(creator.getName());
 		timeIssued = new Date();
 	}
 	
@@ -57,8 +57,12 @@ public class PetitionData implements Comparable<PetitionData> {
 		return timeIssued;
 	}
 	
-	public Set<Player> getSigners() {
+	public Set<String> getSigners() {
 		return signers;
+	}
+	
+	public boolean addSignature(Player signer) {
+		return signers.add(signer.getName());
 	}
 	
 	@Override
