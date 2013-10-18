@@ -1,11 +1,11 @@
 package net.clonecomputer.lab.petitionscontracts;
 
+import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.TITLE_REGEX;
 import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.implode;
 import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.plugin;
 
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,11 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class PetitionCommandExecutor implements CommandExecutor {
-	
-	private static final Pattern TITLE_REGEX = Pattern.compile("\u00ab(.+)\u00bb");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -108,6 +105,7 @@ public class PetitionCommandExecutor implements CommandExecutor {
 				PetitionData petition = plugin.getPetitionStorage().getPetitionData(title);
 				if(petition != null) {
 					if(petition.addSignature((Player) sender)) {
+						plugin.updateOnlinePlayersInventories();
 						sender.sendMessage("§aSuccessfully added your signature to the petition!");
 					} else {
 						sender.sendMessage("§3You have already signed that petition!");
