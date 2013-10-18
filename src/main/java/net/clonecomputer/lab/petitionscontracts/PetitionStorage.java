@@ -33,4 +33,11 @@ public class PetitionStorage {
 	public PetitionData getPetitionData(String title) {
 		return (PetitionData) petitions.get(title);
 	}
+	
+	/**
+	 * Soon to just shuffle the petition into a different list with options on how long closed petitions should be kept
+	 */
+	void closePetition(PetitionData petition) {
+		petitions.remove(petition.getTitle());
+	}
 }
