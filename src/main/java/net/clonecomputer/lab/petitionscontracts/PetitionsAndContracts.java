@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.bukkit.Material;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,12 +25,15 @@ public class PetitionsAndContracts extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		storage = new PetitionStorage(loadData());
+		listener = new OldPetitionFinder();
 		getCommand("petition").setExecutor(new PetitionCommandExecutor());
+		getServer().getPluginManager().registerEvents(listener, this);
 	}
 	
 	@Override
 	public void onDisable() {
 		plugin = null;
+		HandlerList.unregisterAll(listener);
 	}
 	
 	public PetitionStorage getPetitionStorage() {
