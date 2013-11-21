@@ -54,6 +54,7 @@ public class OldPetitionFinder implements Listener {
 	}
 	
 	private void updateItem(ItemStack item) {
+		if(item == null) return; // nothing in that slot of their inventory
 		if(item.getType() == Material.WRITTEN_BOOK) {
 			BookMeta meta = (BookMeta) item.getItemMeta();
 			Matcher matcher = TITLE_REGEX.matcher(meta.getTitle());
