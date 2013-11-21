@@ -19,6 +19,7 @@ This is a bukkit plugin that allows players to petition server admins and create
 * Command that when all of the admins have used it closes a petition (server specific thing) (Test multiple people closing it)
 
 ####Short Term (for version 0.0.1):
+* Add ability to un-sign petitions
 * Saves petitions to an external file for persistence
 * Permissions
 
@@ -27,3 +28,4 @@ This is a bukkit plugin that allows players to petition server admins and create
 * Have the /petitions list command print use multiple pages if necessary
 * All the contract stuff
 * Configuration file that gives plugin greater flexibility
+* Allow creation of "derivative petitions"
