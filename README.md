@@ -20,10 +20,13 @@ This is a bukkit plugin that allows players to petition server admins and create
 
 ####Short Term (for version 0.0.1):
 * Add ability to un-sign petitions
+* A petition with no signatures is removed
+* Command that gives additional info on a petition
 * Saves petitions to an external file for persistence
 * Permissions
 
 ####Long Term:
+* Have removed petitions able to be "revived"
 * Add page for signatures at the end of a petition book
 * Have the /petitions list command print use multiple pages if necessary
 * All the contract stuff
