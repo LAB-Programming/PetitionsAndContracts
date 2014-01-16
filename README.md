@@ -16,8 +16,10 @@ This is a bukkit plugin that allows players to petition server admins and create
 * Have the lore automatically update when someone signs the petition
 * Command that when all of the admins have used it closes a petition (server specific thing)
 
-####Short Term (for version 0.0.1):
+####Untested:
 * Add ability to un-sign petitions
+
+####Short Term (for version 0.0.1):
 * A petition with no signatures is removed
 * Command that gives additional info on a petition
 * Saves petitions to an external file for persistence
