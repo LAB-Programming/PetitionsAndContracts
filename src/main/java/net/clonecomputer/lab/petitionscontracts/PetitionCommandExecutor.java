@@ -1,11 +1,11 @@
 package net.clonecomputer.lab.petitionscontracts;
 
+import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.TITLE_REGEX;
 import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.implode;
 import static net.clonecomputer.lab.petitionscontracts.PetitionsAndContracts.plugin;
 
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,11 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class PetitionCommandExecutor implements CommandExecutor {
-	
-	private static final Pattern TITLE_REGEX = Pattern.compile("\u00ab(.+)\u00bb");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -34,6 +31,8 @@ public class PetitionCommandExecutor implements CommandExecutor {
 			doGetCommand(sender, cmd, label, args);
 		} else if(args[0].equalsIgnoreCase("sign")) {
 			doSignCommand(sender, cmd, label, args);
+		} else if(args[0].equalsIgnoreCase("close")) {
+			doCloseCommand(sender, cmd, label, args);
 		} else {
 			return false;
 		}
@@ -108,6 +107,7 @@ public class PetitionCommandExecutor implements CommandExecutor {
 				PetitionData petition = plugin.getPetitionStorage().getPetitionData(title);
 				if(petition != null) {
 					if(petition.addSignature((Player) sender)) {
+						plugin.updateOnlinePlayersInventories();
 						sender.sendMessage("§aSuccessfully added your signature to the petition!");
 					} else {
 						sender.sendMessage("§3You have already signed that petition!");
@@ -120,6 +120,40 @@ public class PetitionCommandExecutor implements CommandExecutor {
 			}
 		} else {
 			sender.sendMessage("§4Sorry you must be a player to sign petitions");
+		}
+	}
+	
+	
+	/**
+	 * There are a lot of redundancies between this and doSignCommand.<br />
+	 * They probably should either be merged or mostly refactored into another method
+	 */
+	private void doCloseCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(sender instanceof Player) {
+			ItemStack item = ((Player) sender).getItemInHand();
+			BookMeta meta = null;
+			Matcher titleMatcher = null;
+			if(item.getType() == Material.WRITTEN_BOOK) {
+				meta = (BookMeta) item.getItemMeta();
+				titleMatcher = TITLE_REGEX.matcher(meta.getTitle());
+			}
+			if(meta != null && titleMatcher != null && titleMatcher.matches()) {
+				String title = titleMatcher.group(1);
+				PetitionData petition = plugin.getPetitionStorage().getPetitionData(title);
+				if(petition != null) {
+					if(petition.addCloser((Player) sender)) {
+						sender.sendMessage("§aSuccessfully added added your mark to close the petition!");
+					} else {
+						sender.sendMessage("§3You have already marked that petition as closed!");
+					}
+				} else {
+					sender.sendMessage("§4Couldn't find petition (probably has been deleted)");
+				}
+			} else {
+				sender.sendMessage("§4You must have the petition you want to mark as closed in your hand!");
+			}
+		} else {
+			sender.sendMessage("§4Please log onto the server as a player to mark a petition as closed");
 		}
 	}
 

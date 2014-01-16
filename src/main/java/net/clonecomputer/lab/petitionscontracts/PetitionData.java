@@ -65,6 +65,16 @@ public class PetitionData implements Comparable<PetitionData> {
 		return signers.add(signer.getName());
 	}
 	
+	public boolean addCloser(Player closer) {
+		if(closers == null) closers = new HashSet<String>();
+		if(closers.add(closer.getName())) {
+			if(closers.size() >= 3 /*This will be replaced by a config value*/) {
+				PetitionsAndContracts.plugin.getPetitionStorage().closePetition(this);
+			}
+			return true;
+		} else return false;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if(!(o instanceof PetitionData)) return false;
