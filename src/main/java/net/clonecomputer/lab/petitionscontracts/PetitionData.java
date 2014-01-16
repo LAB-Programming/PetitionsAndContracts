@@ -65,6 +65,10 @@ public class PetitionData implements Comparable<PetitionData> {
 		return signers.add(signer.getName());
 	}
 	
+	public boolean removeSignature(Player unsigner) {
+		return signers.remove(unsigner.getName());
+	}
+	
 	public boolean addCloser(Player closer) {
 		if(closers == null) closers = new HashSet<String>();
 		if(closers.add(closer.getName())) {

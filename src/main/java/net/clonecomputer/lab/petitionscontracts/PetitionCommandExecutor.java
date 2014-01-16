@@ -31,6 +31,8 @@ public class PetitionCommandExecutor implements CommandExecutor {
 			doGetCommand(sender, cmd, label, args);
 		} else if(args[0].equalsIgnoreCase("sign")) {
 			doSignCommand(sender, cmd, label, args);
+		} else if(args[0].equalsIgnoreCase("unsign")) {
+			doUnsignCommand(sender, cmd, label, args);
 		} else if(args[0].equalsIgnoreCase("close")) {
 			doCloseCommand(sender, cmd, label, args);
 		} else {
@@ -120,6 +122,50 @@ public class PetitionCommandExecutor implements CommandExecutor {
 			}
 		} else {
 			sender.sendMessage("§4Sorry you must be a player to sign petitions");
+		}
+	}
+	
+	private void doUnsignCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(sender instanceof Player) {
+			if(args.length <= 1) {
+				ItemStack item = ((Player) sender).getItemInHand();
+				BookMeta meta = null;
+				Matcher titleMatcher = null;
+				if(item.getType() == Material.WRITTEN_BOOK) {
+					meta = (BookMeta) item.getItemMeta();
+					titleMatcher = TITLE_REGEX.matcher(meta.getTitle());
+				}
+				if(meta != null && titleMatcher != null && titleMatcher.matches()) {
+					String title = titleMatcher.group(1);
+					PetitionData petition = plugin.getPetitionStorage().getPetitionData(title);
+					if(petition != null) {
+						if(petition.removeSignature((Player) sender)) {
+							plugin.updateOnlinePlayersInventories();
+							sender.sendMessage("§aSuccessfully unsigned the petition!");
+						} else {
+							sender.sendMessage("§3You have not signed that petition!");
+						}
+					} else {
+						sender.sendMessage("§4Couldn't find petition (might have been deleted)");
+					}
+				} else {
+					sender.sendMessage("§3You must either have the petition you want to unsign in your hand or specify its name!");
+				}
+			} else {
+				PetitionData petition = plugin.getPetitionStorage().getPetitionData(implode(" ", args, 1));
+				if(petition != null) {
+					if(petition.removeSignature((Player) sender)) {
+						plugin.updateOnlinePlayersInventories();
+						sender.sendMessage("§aSuccessfully unsigned the petition!");
+					} else {
+						sender.sendMessage("§3You have not signed that petition!");
+					}
+				} else {
+					sender.sendMessage("§4That petition does not exist");;
+				}
+			}
+		} else {
+			sender.sendMessage("§4Sorry you must be a player to unsign petitions");
 		}
 	}
 	
